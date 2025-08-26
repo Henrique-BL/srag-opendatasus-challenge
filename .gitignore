@@ -207,7 +207,8 @@ marimo/_lsp/
 __marimo__/
 
 # General Data
-data/bronze/*.csv
-data/silver/*.csv
-data/gold/*.csv
-data/profiles/*.html
+src/data/bronze/*.csv
+src/data/silver/*.csv
+src/data/gold/*.csv
+src/data/profiles/*.html
+src/data/bronze/INFLUD21.csv
