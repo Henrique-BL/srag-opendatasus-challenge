@@ -6,22 +6,23 @@ import logging
 import os
 import traceback
 
+from src.app.tools.tavily_search_tool import TavilySearchTool
+
 logger = logging.getLogger(__name__)
 
 class SummarizerAgent:
     def __init__(self):
         self.system_prompt = "Observe as notícias e crie um resumo de cada um com as principais informações"
-        self.llm = ChatOpenAI(model=os.getenv("TARGET_AGENT_MODEL"), 
+        self.llm = ChatOpenAI(model=os.getenv("SUMMARIZER_AGENT_MODEL"), 
                               temperature=0, 
                               api_key=os.getenv("PROVIDER_API_KEY"), 
                               base_url=os.getenv("PROVIDER_BASE_URL"))
-        self.tools = []
+        self.tools = [TavilySearchTool()]
         self.agent = create_react_agent(model=self.llm, tools=self.tools, prompt=self.system_prompt)
         
     def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """Process messages through the agent and return updated state."""
         messages = state["messages"]
-        step_count = state["step_count"]
         try:
             logger.info("Executing target agent with messages")
             agent_response = self.agent.invoke({"messages": messages})
