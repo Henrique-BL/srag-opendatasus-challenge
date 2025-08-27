@@ -23,7 +23,7 @@ class MainAgent:
                                         tools=self.tools,
                                         prompt=self.system_prompt,
                                         response_format=MainAgentResponse())
-        
+    
     def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """Process messages through the agent and return updated state."""
         messages = state["messages"]
