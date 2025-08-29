@@ -27,11 +27,11 @@ pip install -r requirements.txt
 3 - Run each cell of the exploratory data analysis notebook at "src/eda". The final result must be a "src/data/silver" populated.
 4 - Run the load process 
 ```bash
-python -m runner --load
+python -m Runner --load
 ``` 
 5 - Run the report generation process 
 ```bash
-python -m runner --generate-report today
+python -m Runner --generate-report today
 ``` 
 **Note**: you can change 'today' to any other date (yyyy-mm-dd).
 
