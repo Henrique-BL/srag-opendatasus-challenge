@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db_silv
+      - POSTGRES_DB=srag_brasil
     networks:
       - backend-network
 
@@ -21,17 +21,15 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_VISIBLE_DEVICES=0
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
       - OLLAMA_FLASH_ATTENTION=1
       - CUDA_VISIBLE_DEVICES=0
-      - OLLAMA_GPU_OVERHEAD=0
+      - OLLAMA_MAX_LOADED_MODELS=1
+      - OLLAMA_GPU_LAYERS=-1
     deploy:
       resources:
-        limits:
-          memory: 8G
         reservations:
-          memory: 4G
           devices:
             - driver: nvidia
               count: all
