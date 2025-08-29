@@ -2,8 +2,10 @@ from typing import Dict, Any
 import logging
 import psycopg2
 from ..utils.db import get_db_connection
+
 logger = logging.getLogger(__name__)
-    
+
+
 def create_database(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     Purpose: Create a new database 'srag_brasil' that will be used to store the data.
@@ -28,17 +30,18 @@ def create_database(state: Dict[str, Any]) -> Dict[str, Any]:
     finally:
         admin_cursor.close()
         admin_conn.close()
-        
+
+
 def create_table(state: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Purpose: Force the creation of a new empty table 'influd_data' that will be 
+    Purpose: Force the creation of a new empty table 'influd_data' that will be
     used to store the data.
     """
     try:
         conn = get_db_connection("srag_brasil")
         cursor = conn.cursor()
         drop_table_sql = "DROP TABLE IF EXISTS srag_brasil.public.influd_data;"
-        
+
         create_table_sql = """
         CREATE TABLE srag_brasil.public.influd_data (
             id BIGSERIAL,                    
@@ -58,7 +61,7 @@ def create_table(state: Dict[str, Any]) -> Dict[str, Any]:
             PRIMARY KEY (id, origin_id)   
         )
         """
-        
+
         cursor.execute(drop_table_sql)
         cursor.execute(create_table_sql)
         conn.commit()
