@@ -5,7 +5,9 @@ from ..utils.db import get_db_connection
 logger = logging.getLogger(__name__)
     
 def create_database(state: Dict[str, Any]) -> Dict[str, Any]:
-    
+    """
+    Purpose: Create a new database 'srag_brasil' that will be used to store the data.
+    """
     try:
         admin_conn = get_db_connection("postgres")
         admin_cursor = admin_conn.cursor()
@@ -28,6 +30,10 @@ def create_database(state: Dict[str, Any]) -> Dict[str, Any]:
         admin_conn.close()
         
 def create_table(state: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Purpose: Force the creation of a new empty table 'influd_data' that will be 
+    used to store the data.
+    """
     try:
         conn = get_db_connection("srag_brasil")
         cursor = conn.cursor()

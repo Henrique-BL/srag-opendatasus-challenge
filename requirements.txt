@@ -86,6 +86,7 @@ notebook_shim==0.2.4
 numba==0.61.0
 numpy==2.1.3
 openai==1.101.0
+ordered-set==4.1.0
 orjson==3.11.2
 ormsgpack==1.10.0
 overrides==7.7.0
@@ -100,12 +101,14 @@ platformdirs==4.3.8
 prometheus_client==0.22.1
 prompt_toolkit==3.0.51
 psutil==7.0.0
+psycopg2-binary==2.9.10
 pure_eval==0.2.3
 puremagic==1.30
 pycparser==2.22
 pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.2
+PyLaTeX==1.4.2
 pyparsing==3.2.3
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1

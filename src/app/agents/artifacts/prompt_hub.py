@@ -1,10 +1,14 @@
 from langchain import hub as prompts
 from langchain_core.prompts import ChatPromptTemplate
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 class PromptHub:
-    def __init__(self, force_push: bool = False):
-        self.prompts_file_path:str = "src/app/agents/artifacts/prompts.json"
+    def __init__(self, file_path: str = "src/app/agents/artifacts/prompts.json",
+                       force_push: bool = False):
+        self.prompts_file_path:str = file_path
         self.prompts_templates:dict[str, ChatPromptTemplate] = {}
         self._load_prompts_templates(force_push)
         
@@ -19,7 +23,7 @@ class PromptHub:
                     )
                     prompts.push(prompt_name, prompt_template, tags=[agent_name])
         except Exception as e:
-            print(f"Error pushing prompts: {e}")
+            logger.error(f"Error pushing prompts: {e}")
         
     def _pull_prompts_templates(self):
         try:
@@ -29,7 +33,7 @@ class PromptHub:
                 for prompt_name, _ in self.prompts[agent_name].items():
                     self.prompts_templates[prompt_name] = prompts.pull(prompt_name)
         except Exception as e:
-            print(f"Error pulling prompts: {e}")
+            logger.error(f"Error pulling prompts: {e}")
             
     def _load_prompts_templates(self, force_push: bool = False):
         try:
@@ -39,7 +43,7 @@ class PromptHub:
                 self._push_prompt_template()
                 self._pull_prompts_templates()
         except Exception as e:
-            print(f"Error loading prompts: {e}")
+            logger.error(f"Error loading prompts: {e}")
 
     def get_prompt_template(self, prompt_name: str) -> ChatPromptTemplate:
         return self.prompts_templates[prompt_name]

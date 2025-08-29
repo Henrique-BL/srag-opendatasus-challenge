@@ -26,10 +26,10 @@ class TavilySearchTool(BaseTool):
     description: str = "A tool to search the web for news about influenza and others healthcare topics in Brazil"
     args_schema: Type[BaseModel] = TavilySearchToolInput
     
-    def _run(self, start_date:str,
-                   end_date:str, 
-                   search_depth:Literal["basic", "advanced"],
-                   max_results:int) -> str:
+    def _run(self, start_date:str = None,
+                   end_date:str = None, 
+                   search_depth:Literal["basic", "advanced"] = "basic",
+                   max_results:int = 3) -> str:
         try:
             sources = ["https://agencia.fiocruz.br",
                     "https://agenciabrasil.ebc.com.br"
@@ -53,10 +53,10 @@ class TavilySearchTool(BaseTool):
             logger.error(f"Error searching for {queries}: {e}")
             return {"error": "Data not found"}
         
-    async def _arun(self, start_date:str,
-                          end_date:str, 
-                          search_depth:Literal["basic", "advanced"],
-                          max_results:int) -> str:
+    async def _arun(self, start_date:str = None,
+                          end_date:str = None, 
+                          search_depth:Literal["basic", "advanced"] = "basic",
+                          max_results:int = 3) -> str:
         print(f"Searching for {start_date} to {end_date} with {search_depth} depth and {max_results} results")
         try:
             sources = ["https://agencia.fiocruz.br",
@@ -85,7 +85,7 @@ class TavilySearchTool(BaseTool):
                 for result in response.get('results', []):
                     if isinstance(response, Exception):
                         continue
-                    if result.get('score', 0) > 0.5:
+                    if result.get('score', 0) > 0.1:
                         title = result.get('title')
                         # content = result.get('content')
                         results.append({"title":title, "content":answer})

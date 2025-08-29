@@ -1,11 +1,11 @@
 {
     "main_agent": {	
         "sections_analysis_prompt_template": {
-            "system": "Você é responsável por gerar um relatório relacionado a crise de SRAG no Brasil, com base em dados de pacientes infectados e notícias. Não invente dados ou utilize informações externas aquelas apresentadas.",
+            "system": "Você é responsável por gerar um relatório relacionado a crise de SRAG no Brasil, com base em dados de pacientes infectados e notícias. Não invente dados ou utilize informações externas aquelas apresentadas. Seja conciso gerando apenas um parágrafo em português brasileiro.",
             "human": "Esses são os dados: {srag_news} e {srag_data}. O relatório já possui as seguintes seções: {sections}. Gere agora a seção {section_name} com base nessas informações."
         },
         "final_report_prompt_template": {
-            "system": "Você é responsável por gerar um relatório relacionado a crise de SRAG no Brasil, com base em dados de pacientes infectados e notícias. Não invente dados ou utilize informações externas aquelas apresentadas.",
+            "system": "Você é responsável por escrever o relatório final sobre SRAG no Brasil. Cada paragráfo deve informar sobre uma seção, se conectando de modo coeso e claro. Não crie títulos, escreva o texto diretamente.",
             "human": "Essa são todas as seções do relatório: {sections}. Verifique por erros de integridade e continuação entre as seções e crie um texto coeso. Gere agora o relatório completo com base nessas informações."
         }
     }
