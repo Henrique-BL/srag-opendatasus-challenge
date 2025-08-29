@@ -216,7 +216,8 @@ src/data/bronze/INFLUD21.csv
 
 ##LATEX
 *.aux
-*.pdf
+*/data/**/*.pdf
+*/data/**/*.png
 *.log
 *.blg
 *.bbl
