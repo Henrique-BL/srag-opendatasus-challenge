@@ -1,6 +1,6 @@
 ## Context
-This project is based on the premise of generating a detailed report document using large language models. The data used is related to Brazilian SRAG Cases, containing the number of infected individuals, ICU occupation, vaccination, etc. The workflow is simple: there are two main functions TavilySearchTool and QueryDataTool, the first is responsible for getting data from news of trusted sources and the latter to get the real OpenDataSUS data from the database. Both tools are invoked directly (with no control of the LLM), with this we gain fine control of what data will be delivered and used to create the report.
-
+This project is based on the premise of generating a detailed report document using large language models. The data used is related to Brazilian SRAG Cases, containing the number of infected individuals, ICU occupation, vaccination, etc. The workflow is simple: there are two main functions TavilySearchTool and QueryDataTool, the first is responsible for getting data from news of trusted sources and the latter to get the real OpenDataSUS data from the database. Both tools are invoked directly (with no control of the LLM), with this we gain fine control of what data will be delivered and used to create the report. This structure can be better visualized at 
+[Project Architecture](architecture.pdf).
 
 ### Optional Requirements
 - PgAdmin or DBeaver: useful for analyzing the data that's being loaded.
