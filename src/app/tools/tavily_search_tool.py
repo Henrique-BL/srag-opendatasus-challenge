@@ -2,6 +2,7 @@ from langchain_core.tools import BaseTool
 from typing import Type, Literal
 from pydantic import BaseModel, Field
 from tavily import TavilyClient, AsyncTavilyClient
+from src.utils.formatting import create_response_message
 import asyncio
 import logging
 import os
@@ -61,10 +62,11 @@ class TavilySearchTool(BaseTool):
                 for q in queries
             ]
             logger.info(f"Search results with {len(responses)} news")
-            return responses
+            return create_response_message("success", responses)
         except Exception as e:
             logger.error(f"Error searching for {queries}: {e}")
-            return {"error": "Data not found"}
+            return create_response_message("error", 
+                                           "Data not found")
 
     async def _arun(
         self,
@@ -116,8 +118,10 @@ class TavilySearchTool(BaseTool):
                         # content = result.get('content')
                         results.append({"title": title, "content": answer})
             logger.info(f"Search results after score filtering: {len(results)} news")
-            return results
+            if len(results) == 0:
+                return create_response_message("error", "Data retrieved from web search is empty")
+            return create_response_message("success", results)
         except Exception as e:
             traceback.print_exc()
             logger.error(f"Error searching for {queries}: {e}")
-            return {"error": "Data not found"}
+            return create_response_message("error", "Error searching for data from web search")
