@@ -3,6 +3,7 @@ This project is based on the premise of generating a detailed report document us
 [Project Architecture](architecture.pdf).
 
 ### Optional Requirements
+- UV Package Mananger (Suggested): useful to install and run the project without dependencies and python version conflict 
 - PgAdmin or DBeaver: useful for analyzing the data that's being loaded.
 - Docker Desktop: useful interface to execute Ollama commands directly at the container.
 - Ollama Model: only if you're not going to use another cloud provider. Must be pulled inside docker container with the command "ollama pull {model_id}" 
@@ -30,9 +31,15 @@ pip install -r requirements.txt
 python -m Runner --load
 ``` 
 5 - Run the report generation process 
+Suggested. using uv:
+```bash
+uv run runner.py --generate-report today
+``` 
+Or you can use:
 ```bash
 python -m Runner --generate-report today
 ``` 
+
 **Note**: you can change 'today' to any other date (yyyy-mm-dd).
 
 The final report can be found as a .pdf file under 'src/data/reports'
