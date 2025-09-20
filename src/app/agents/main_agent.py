@@ -19,7 +19,7 @@ class MainAgent:
             #   reasoning_effort="low",
             temperature=0,
             api_key=os.getenv("PROVIDER_API_KEY"),
-            #   base_url=os.getenv("PROVIDER_BASE_URL")
+            base_url=os.getenv("PROVIDER_BASE_URL")
         )
         self.tools = []
         self.agent = None

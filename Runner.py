@@ -11,7 +11,6 @@ import json
 from datetime import datetime
 from src.app.Graph import compiled_graph as report_graph
 from src.pipelines.load import compiled_graph as load_graph
-
 logging_config = json.load(open("src/settings/logging.json"))
 logging.config.dictConfig(logging_config)
 logger = logging.getLogger(__name__)

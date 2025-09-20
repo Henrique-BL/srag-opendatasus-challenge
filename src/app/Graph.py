@@ -15,10 +15,26 @@ import pandas as pd
 import locale
 import traceback
 
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 logger = logging.getLogger(__name__)
 
 
+# Set Portuguese Brazil locale with fallback options
+try:
+    logger.info("Setting locale to pt_BR.UTF-8")
+    locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+except locale.Error:
+    try:
+        logger.info("Setting locale to pt_BR")
+        locale.setlocale(locale.LC_ALL, "pt_BR")
+    except locale.Error:
+        try:
+            logger.info("Setting locale to C.UTF-8")
+            locale.setlocale(locale.LC_ALL, "C.UTF-8")
+        except locale.Error:
+            # Fallback to system default
+            logger.info("Setting locale to system default")
+            locale.setlocale(locale.LC_ALL, "")
+            
 class ReportState(TypedDict):
     report_date: str
     report: dict[str, Any]
@@ -202,9 +218,7 @@ def _get_srag_news(state: ReportState) -> ReportState:
 
 def _get_srag_data(state: ReportState) -> ReportState:
     try:
-        if not verify_report_date(state["report_date"]):
-            state["stage"] = "error"
-            return state
+        report_date = verify_report_date(state["report_date"])
         query_tool = QueryDataTool()
         report_date = datetime.strptime(state["report_date"], "%Y-%m-%d")
         all_years_start_date = (report_date - relativedelta(years=4)).strftime(
@@ -323,12 +337,12 @@ def add_sequence_with_verification(
 
 # Create the graph
 graph = StateGraph(state_schema=ReportState)
-
+main_agent = MainAgent()
 # Use our custom sequence builder with verification
 nodes_sequence = [
     ("insert_data", _get_srag_data),
     ("insert_news", _get_srag_news),
-    ("main_agent", MainAgent().execute),
+    ("main_agent", main_agent.execute),
     ("create_graphics", _create_graphics),
     ("build_report", _build_report),
 ]

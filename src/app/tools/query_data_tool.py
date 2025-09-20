@@ -53,7 +53,7 @@ def _get_csv_data(
         csv_data += f"{data},{','.join(map(str, row[1:]))}\n"
     return csv_data
 
-def verify_report_date(report_date: str) -> Union[str, bool]:
+def verify_report_date(report_date: str) -> str:
     """
     Purpose: Verify if the report date exists in the database.
     Args:
@@ -64,6 +64,7 @@ def verify_report_date(report_date: str) -> Union[str, bool]:
     logger.info(f"Verifying if report date {report_date} exists in the database")
     try:
         connection = get_db_connection()
+        most_recent_date = report_date
         cursor = connection.cursor()
         verify = verify_data_exists(cursor, "influd_data", ["data_preenchimento"],
                                 report_date)
@@ -74,7 +75,7 @@ def verify_report_date(report_date: str) -> Union[str, bool]:
             most_recent_date = cursor.fetchone()[0]
             logger.info(f"Report Date not found, trying with most recent date: {most_recent_date}")
 
-        return verify
+        return most_recent_date
     except Exception as e:
         traceback.print_exc()
         logger.error(f"Error verifying report date: {str(e)}")
