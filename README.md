@@ -17,12 +17,14 @@ This project is based on the premise of generating a detailed report document us
 - Docker: docker must be installed and running, it's necessary to run the Ollama server and instantiate the database.
 - Tavily Search API KEY: necessary to perform web searches about SRAG.
 - Python >= 3.11.9
+- Latex (latexmk, pylatex): needed to create .tex and .pdf files.
 
 ### Attention
-This projects was build over WSL. Docker is necessary for both database connections and to run OLLAMA locally so that the connection URL refer to the same enviroment. If there's a need to use other llm provider, comment out the API_URL field at app/agents/main_agent self.llm attribute and modify the API key of .env. 
+This projects was build over WSL. Docker is necessary for both database connections and to run OLLAMA locally so that the connection URL refer to the same enviroment. If there's a need to use other llm provider, comment out the **API_URL** field at app/agents/main_agent **self.llm** attribute and modify the API key of .env. 
 
 ### Steps
 1 - Download the .csv files from the OpenDataSus repository located at https://opendatasus.saude.gov.br/dataset/srag-2021-a-2024 and rename each file to "INFLUD{year_with_two_digits}" and move them to "src/data/bronze"
+
 **Note**: at the time of creation, the files contain data from 2021 to 2025.
 
 2 - Install all dependencies (requirements.txt)
@@ -34,9 +36,20 @@ or use uv (recommended)
 ```bash
 uv sync
 ``` 
-3 - Manually run each cell of the exploratory data analysis notebook at "src/eda". The final result must be a "src/data/silver" populated with data.
+3 - Install Latex 
+Ubuntu (Linux)
+```bash
+sudo add-apt-repository universe
+sudo apt update && sudo apt install -y texlive-full
+``` 
+or in case of a compact install (not tested) 
+```bash
+sudo add-apt-repository universe
+sudo apt update && sudo apt install -y latexmk
+``` 
+4 - Manually run each cell of the exploratory data analysis notebook at "src/eda". The final result must be a "src/data/silver" populated with .csv data.
 
-4 - Run the load process 
+5 - Run the load process 
 ```bash
 python -m Runner --load
 ``` 
@@ -44,10 +57,10 @@ python -m Runner --load
 ```bash
 uv run Runner.py --load
 ``` 
-5 - Run the report generation process 
+6 - Run the report generation process 
 Suggested. using uv:
 ```bash
-uv run runner.py --generate-report today
+uv run Runner.py --generate-report today
 ``` 
 Or you can use:
 ```bash
